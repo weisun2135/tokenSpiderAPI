@@ -1,7 +1,14 @@
 import pymongo
+from setting import DBHOST,DBPORT
 
-try:
-    client = pymongo.MongoClient(host='47.244.154.170',port=27017)
+def db_connent():
+    client = pymongo.MongoClient(host=DBHOST,port=DBPORT)
     db = client['token']
-# except pymongo.errors as e:
-#     return("连接异常!",e)
+    tokenlist = db['tokenlist']
+    return tokenlist
+
+def Save(mess):
+    conn = db_connent()
+    conn.insert_one(mess)
+
+

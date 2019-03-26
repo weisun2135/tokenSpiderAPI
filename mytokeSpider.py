@@ -1,8 +1,8 @@
 from urllib.parse import urlencode
 import requests
 import time
-import redis
-
+from db import Save
+from setting import START,END
 
 def get_page(page):
     params = {
@@ -38,16 +38,6 @@ def get_items(json):
                 'price':item['price'],
                 'price_usd':item['price_usd'],
             }
-def radisSave(mess):
-    try:
-        pool = redis.ConnectionPool(host='47.244.154.170', port=6379, db=mytoken, password='qwe123')
-        print("connected success.")
-    except:
-        print("could not connect to redis.")
-    r = redis.StrictRedis(connection_pool=pool)
-    r.hset(mess)
-
-
 
 def main(page):
     json = get_page(page)
@@ -55,12 +45,11 @@ def main(page):
     # btc=json['data']['list'][0]
     # print(type(btc))
     for mess in get_items(json):
+        Save(mess)
         print(mess)
 
-        radisSave(mess)
 
-START=1
-END=92
+
 if __name__ == '__main__':
     for i in range(START,END+1):
         # print(i)
