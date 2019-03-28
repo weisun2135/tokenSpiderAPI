@@ -1,8 +1,6 @@
 from urllib.parse import urlencode
-import requests
-import time
-from db import Save
-from setting import START,END
+from request_get import get_url_json
+from setting import START,END,URL
 
 def get_page(page):
     params = {
@@ -17,14 +15,11 @@ def get_page(page):
         'language': 'zh_CN',
         'legal_currency': 'CNY',
     }
-    url = 'https://speed-api.mytokenapi.com/ticker/currencylist?' + urlencode(params)
+    url = URL + urlencode(params)
     # print(url)
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-    except requests.ConnectionError:
-        return None
+    return get_url_json(url)
+
+
 def get_items(json):
     if json.get('data'):
         for item in json['data']['list']:
@@ -39,19 +34,6 @@ def get_items(json):
                 'price_usd':item['price_usd'],
             }
 
-def main(page):
-    json = get_page(page)
-    # print(type(json))
-    # btc=json['data']['list'][0]
-    # print(type(btc))
-    for mess in get_items(json):
-        Save(mess)
-        print(mess)
 
 
 
-if __name__ == '__main__':
-    for i in range(START,END+1):
-        # print(i)
-        main(i)
-        time.sleep(1)
