@@ -3,12 +3,15 @@
 mongodb
 
 1.安装Pipenv  
+
 '''
 python install pipenv  
 '''
+
 2.clone到本地
 
 3.在当前文件夹下执行 
+
 '''
 pipenv install 
 '''
@@ -16,6 +19,7 @@ pipenv install
 
 
 运行  
+
 '''pipenv main.py'''
 
 
