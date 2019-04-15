@@ -20,7 +20,7 @@ pipenv install
 
 运行  
 
-'''pipenv main.py'''
+'''pipenv run main.py'''
 
 
 # API使用
